@@ -1,8 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './config/db.js';
-import { autoSeedIfEmpty } from './config/autoSeed.js';
+import connectDB, { lastDbError } from './config/db.js';
 
 import authRoutes from './routes/auth.routes.js';
 import courseRoutes from './routes/course.routes.js';
@@ -37,7 +36,8 @@ app.get('/api/db-status', (req, res) => {
     statusText: ['Disconnected', 'Connected', 'Connecting', 'Disconnecting'][mongoose.connection.readyState] || 'Unknown',
     hasMongoUriEnv: Boolean(process.env.MONGO_URI),
     hasMongoUrlEnv: Boolean(process.env.MONGO_URL),
-    activeConfiguredUri: maskedUri
+    activeConfiguredUri: maskedUri,
+    lastDbError: lastDbError
   });
 });
 
@@ -46,7 +46,9 @@ app.use('/api', (req, res, next) => {
   if (mongoose.connection.readyState !== 1) {
     return res.status(503).json({
       success: false,
-      message: 'Database connection offline. Please set MONGO_URI in Railway Environment Variables and allow 0.0.0.0/0 IP access in MongoDB Atlas.'
+      message: 'Database connection offline.',
+      lastDbError: lastDbError || 'MongoDB connection not ready',
+      tip: 'Verify MONGO_URI in Railway Environment Variables and Network Access 0.0.0.0/0 in MongoDB Atlas.'
     });
   }
   next();
