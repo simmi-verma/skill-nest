@@ -184,10 +184,14 @@ Pre-seeded database accounts for quick review:
 
 ---
 
-## ☁️ Deployment Strategy
+## ☁️ Live URLs & Deployment Strategy
 
+- ⚡ **Live Backend API (Railway)**: `https://skill-nest-production.up.railway.app/`
+- 🌐 **Live API Health Endpoint**: `https://skill-nest-production.up.railway.app/`
 - **Database**: Hosted on **MongoDB Atlas** (Free Tier M0 Cluster).
-- **Backend API**: Hosted on **Render** / **Railway** as a Node.js web service.
+- **Backend API**: Hosted on **Railway** (`https://skill-nest-production.up.railway.app/`).
+- **Frontend SPA**: Hosted on **Vercel** / **Netlify** with automatic Vite builds (`VITE_API_URL=https://skill-nest-production.up.railway.app/api`).
+- **Marketing Site**: Provisioned on **Hostinger** using WordPress, Astra Theme, and Elementor.
 - **Frontend SPA**: Hosted on **Vercel** / **Netlify** with automatic Vite builds.
 - **Marketing Site**: Provisioned on **Hostinger** using WordPress, Astra Theme, and Elementor.
 
