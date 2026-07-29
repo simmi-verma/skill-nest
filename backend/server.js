@@ -2,13 +2,18 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
+import { autoSeedIfEmpty } from './config/autoSeed.js';
 
 import authRoutes from './routes/auth.routes.js';
 import courseRoutes from './routes/course.routes.js';
 import enrollmentRoutes from './routes/enrollment.routes.js';
 
 dotenv.config();
-connectDB();
+
+// Connect DB and trigger auto-seed if empty
+connectDB().then(() => {
+  autoSeedIfEmpty();
+});
 
 const app = express();
 
@@ -23,9 +28,23 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
   res.json({
-    message: 'Welcome to the SkillNest API',
+    name: 'SkillNest Mini Product Platform API',
     status: 'healthy',
-    version: '1.0.0'
+    version: '1.0.0',
+    availableEndpoints: [
+      'GET  /',
+      'GET  /api/courses',
+      'GET  /api/courses/:id',
+      'POST /api/courses (Admin)',
+      'PUT  /api/courses/:id (Admin)',
+      'DELETE /api/courses/:id (Admin)',
+      'POST /api/auth/register',
+      'POST /api/auth/login',
+      'GET  /api/auth/me',
+      'POST /api/enrollments/:courseId',
+      'GET  /api/enrollments/my-courses',
+      'GET  /api/enrollments/admin/all (Admin)'
+    ]
   });
 });
 
@@ -34,7 +53,11 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
 
 app.use((req, res) => {
-  res.status(404).json({ success: false, message: 'Endpoint not found' });
+  res.status(404).json({ 
+    success: false, 
+    message: `Endpoint not found: ${req.method} ${req.originalUrl}`,
+    tip: 'All API routes require the /api prefix. For example: GET /api/courses'
+  });
 });
 
 app.use((err, req, res, next) => {
