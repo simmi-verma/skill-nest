@@ -26,7 +26,22 @@ app.use((req, res, next) => {
   next();
 });
 
-// Database connection readiness check middleware
+// Diagnostic endpoint to check DB connection status on cloud host
+app.get('/api/db-status', (req, res) => {
+  const uri = process.env.MONGO_URI || process.env.MONGO_URL || '';
+  const maskedUri = uri ? uri.replace(/:([^@]+)@/, ':****@') : 'NONE_SET';
+  
+  res.json({
+    success: true,
+    readyState: mongoose.connection.readyState,
+    statusText: ['Disconnected', 'Connected', 'Connecting', 'Disconnecting'][mongoose.connection.readyState] || 'Unknown',
+    hasMongoUriEnv: Boolean(process.env.MONGO_URI),
+    hasMongoUrlEnv: Boolean(process.env.MONGO_URL),
+    activeConfiguredUri: maskedUri
+  });
+});
+
+// Database connection readiness check middleware for API data endpoints
 app.use('/api', (req, res, next) => {
   if (mongoose.connection.readyState !== 1) {
     return res.status(503).json({
