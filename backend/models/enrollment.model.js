@@ -1,0 +1,34 @@
+import mongoose from 'mongoose';
+
+const enrollmentSchema = new mongoose.Schema(
+  {
+    student: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    course: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course',
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ['enrolled', 'completed', 'cancelled'],
+      default: 'enrolled',
+    },
+    enrolledAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+// Prevent duplicate enrollment for same student and course
+enrollmentSchema.index({ student: 1, course: 1 }, { unique: true });
+
+const Enrollment = mongoose.model('Enrollment', enrollmentSchema);
+export default Enrollment;

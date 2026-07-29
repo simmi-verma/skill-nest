@@ -1,0 +1,50 @@
+:root {
+  /* Color Palette - Light Theme */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  
+  --primary: #2563eb;
+  --primary-glow: rgba(37, 99, 235, 0.08);
+  --primary-hover: #1d4ed8;
+  
+  --secondary: #7c3aed;
+  --secondary-glow: rgba(124, 58, 237, 0.08);
+  
+  --success: #059669;
+  --success-glow: rgba(5, 150, 105, 0.08);
+  
+  --danger: #ef4444;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  
+  --border-color: rgba(15, 23, 42, 0.08);
+  --border-focus: rgba(37, 99, 235, 0.4);
+  
+  /* Additional layout-specific variables for adaptive styling */
+  --navbar-bg: rgba(248, 250, 252, 0.85);
+  --input-bg: rgba(15, 23, 42, 0.02);
+  --sidebar-bg: rgba(15, 23, 42, 0.02);
+  --table-header-bg: rgba(15, 23, 42, 0.02);
+  --scrollbar-thumb: rgba(15, 23, 42, 0.15);
+  --dashboard-header-bg: linear-gradient(to bottom, rgba(15, 23, 42, 0.04), transparent);
+  
+  /* Layout Options */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 24px;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -1px rgba(15, 23, 42, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
+  --shadow-glow: 0 0 20px 0 rgba(37, 99, 235, 0.1);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s ease;
+}
