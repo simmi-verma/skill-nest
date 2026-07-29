@@ -1,0 +1,21 @@
+{
+  "name": "skillnest-monorepo",
+  "version": "1.0.0",
+  "description": "SkillNest Mini Product Platform Monorepo Root",
+  "main": "backend/server.js",
+  "type": "module",
+  "scripts": {
+    "postinstall": "cd backend && npm install",
+    "start": "cd backend && node server.js",
+    "seed": "cd backend && node seed.js",
+    "build:frontend": "cd frontend && npm install && npm run build"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.2.1"
+  }
+}
