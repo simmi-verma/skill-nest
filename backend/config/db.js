@@ -4,10 +4,10 @@ export let lastDbError = null;
 
 const connectDB = async () => {
   try {
-    const rawUri = (process.env.MONGO_URI || process.env.MONGO_URL || '').trim();
+    const rawUri = (process.env.MONGODB_URI || process.env.MONGO_URI || process.env.MONGO_URL || '').trim();
     if (!rawUri) {
-      lastDbError = 'No MONGO_URI environment variable configured on host.';
-      console.error('Database Connection Error: MONGO_URI environment variable is missing.');
+      lastDbError = 'No MONGODB_URI or MONGO_URI environment variable configured on host.';
+      console.error('Database Connection Error: MONGODB_URI environment variable is missing.');
       return;
     }
 
