@@ -26,6 +26,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// Database connection readiness check middleware
+app.use('/api', (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      success: false,
+      message: 'Database connection offline. Please set MONGO_URI in Railway Environment Variables and allow 0.0.0.0/0 IP access in MongoDB Atlas.'
+    });
+  }
+  next();
+});
+
 // Request logger for local debugging
 app.use((req, res, next) => {
   console.log(`[${new Date().toLocaleTimeString()}] ${req.method} ${req.originalUrl}`);
