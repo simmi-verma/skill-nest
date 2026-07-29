@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 import connectDB, { lastDbError } from './config/db.js';
+import { autoSeedIfEmpty } from './config/autoSeed.js';
 
 import authRoutes from './routes/auth.routes.js';
 import courseRoutes from './routes/course.routes.js';
@@ -67,6 +69,7 @@ app.get('/', (req, res) => {
     version: '1.0.0',
     availableEndpoints: [
       'GET  /',
+      'GET  /api/db-status',
       'GET  /api/courses',
       'GET  /api/courses/:id',
       'POST /api/courses (Admin)',
