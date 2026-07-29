@@ -7,7 +7,12 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token') || null);
   const [loading, setLoading] = useState(true);
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  let rawUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  rawUrl = rawUrl.trim().replace(/\/+$/, '');
+  if (!rawUrl.endsWith('/api')) {
+    rawUrl += '/api';
+  }
+  const API_BASE_URL = rawUrl;
 
   // Run on load to fetch fresh user details if token exists
   useEffect(() => {
