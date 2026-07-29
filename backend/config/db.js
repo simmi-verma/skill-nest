@@ -4,7 +4,13 @@ export let lastDbError = null;
 
 const connectDB = async () => {
   try {
-    const rawUri = process.env.MONGO_URI || process.env.MONGO_URL;
+    const rawUri = (process.env.MONGO_URI || process.env.MONGO_URL || '').trim();
+    if (!rawUri) {
+      lastDbError = 'No MONGO_URI environment variable configured on host.';
+      console.error('Database Connection Error: MONGO_URI environment variable is missing.');
+      return;
+    }
+
     console.log(`Attempting MongoDB connection (URI length: ${rawUri.length})...`);
     
     const conn = await mongoose.connect(rawUri, {

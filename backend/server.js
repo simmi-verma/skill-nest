@@ -12,9 +12,15 @@ import enrollmentRoutes from './routes/enrollment.routes.js';
 dotenv.config();
 
 // Connect DB and trigger auto-seed if empty
-connectDB().then(() => {
-  autoSeedIfEmpty();
-});
+connectDB()
+  .then(() => {
+    if (typeof autoSeedIfEmpty === 'function') {
+      autoSeedIfEmpty().catch((err) => console.error('AutoSeed error:', err.message));
+    }
+  })
+  .catch((err) => {
+    console.error('DB init error:', err.message);
+  });
 
 const app = express();
 
